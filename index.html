@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>六一快乐 🎈</title>
+  <title>六一快乐 · 星愿礼盒</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
       background: linear-gradient(160deg, #e3f2fd 0%, #bbdefb 100%);
@@ -17,7 +23,7 @@
       position: relative;
     }
 
-    /* 漂浮云朵和星星 */
+    /* 漂浮云朵和星星装饰 */
     .cloud, .star {
       position: absolute;
       opacity: 0.35;
@@ -49,13 +55,31 @@
       100% { transform: translateY(-20px) rotate(3deg); }
     }
 
-    /* 主内容区 */
     .container {
       width: 100%;
       max-width: 400px;
       padding: 30px 20px;
       text-align: center;
       z-index: 2;
+      position: relative;
+    }
+
+    /* 第一页内容 */
+    .page-primary {
+      transition: opacity 0.35s ease;
+    }
+    /* 标题前面没有任何气球符号 */
+    .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #0d47a1;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+    .subtitle {
+      color: #1565c0;
+      font-size: 1rem;
+      margin-bottom: 30px;
     }
 
     /* 礼物盒 */
@@ -70,8 +94,6 @@
     .gift-box:active {
       transform: scale(0.96);
     }
-
-    /* 盒子身体 */
     .box-body {
       position: absolute;
       bottom: 0;
@@ -82,7 +104,6 @@
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(25, 118, 210, 0.3);
     }
-    /* 丝带竖条 */
     .ribbon-vertical {
       position: absolute;
       bottom: 0;
@@ -93,7 +114,6 @@
       background: #ff9800;
       border-radius: 4px 4px 0 0;
     }
-    /* 盖子 */
     .box-lid {
       position: absolute;
       top: 0;
@@ -106,7 +126,6 @@
       transform-origin: left bottom;
       transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    /* 蝴蝶结 */
     .bow {
       position: absolute;
       top: -20px;
@@ -136,61 +155,77 @@
       border-radius: 50%;
     }
 
-    /* 兑换券卡片 */
-    .voucher-card {
-      display: none;
-      background: white;
-      border-radius: 24px;
-      padding: 25px 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-      animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-      margin-top: 20px;
-    }
-    .voucher-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 16px;
-      margin-bottom: 15px;
-    }
-    .voucher-text {
-      color: #1565c0;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin: 5px 0;
-    }
-    .voucher-sub {
-      color: #64b5f6;
-      font-size: 0.95rem;
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0.3); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* 提示语 */
     .hint {
       color: #1976d2;
       font-size: 1.1rem;
       margin-bottom: 10px;
-      letter-spacing: 1px;
+      font-weight: 500;
     }
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #0d47a1;
-      margin-bottom: 8px;
+
+    /* 第二页：兑换券卡片 - 只有图片和专属兑换券文字 */
+    .voucher-card {
+      display: none;
+      background: transparent;
+      border-radius: 32px;
+      padding: 12px 10px 20px 10px;
+      animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center;
     }
-    .subtitle {
+    .voucher-card img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.12);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .voucher-card img:first-child {
+      margin-bottom: 18px;
+    }
+    .voucher-text {
       color: #1565c0;
-      font-size: 1rem;
-      margin-bottom: 30px;
+      font-weight: bold;
+      font-size: 1.4rem;
+      margin: 20px 0 8px 0;
+      background: rgba(255,255,240,0.7);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+    /* 隐藏副标题，只保留上面的专属兑换券文字 */
+    .voucher-sub {
+      display: none;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.2) rotate(-8deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    /* 星星爆炸特效层 */
+    .star-explosion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px 16px; }
+      .title { font-size: 1.8rem; }
+      .voucher-text { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 装饰性云朵和星星 -->
+  <!-- 装饰云朵和星星 -->
   <div class="cloud"></div>
   <div class="cloud"></div>
   <div class="cloud"></div>
@@ -199,52 +234,245 @@
   <div class="star"></div>
 
   <div class="container">
-    <div class="title">🎈 六一快乐</div>
-    <div class="subtitle">希望你永远保持童心</div>
+    <!-- 第一页：包含标题、礼物盒、提示语 -->
+    <div id="firstPageContainer" class="page-primary">
+      <!-- 标题前面没有任何气球符号 -->
+      <div class="title">六一快乐</div>
+      <div class="subtitle">希望你永远保持童心</div>
 
-    <!-- 礼物盒（初始可见） -->
-    <div class="gift-box" id="giftBox">
-      <div class="box-lid" id="lid"></div>
-      <div class="bow">
-        <div class="bow-left"></div>
-        <div class="bow-right"></div>
-        <div class="bow-center"></div>
+      <div class="gift-box" id="giftBox">
+        <div class="box-lid" id="lid"></div>
+        <div class="bow">
+          <div class="bow-left"></div>
+          <div class="bow-right"></div>
+          <div class="bow-center"></div>
+        </div>
+        <div class="box-body"></div>
+        <div class="ribbon-vertical"></div>
       </div>
-      <div class="box-body"></div>
-      <div class="ribbon-vertical"></div>
+
+      <div class="hint" id="hintText">✨ 戳一戳盒子，有星星惊喜 ✨</div>
     </div>
 
-    <div class="hint" id="hintText">👆 点一下拆礼物</div>
-
-    <!-- 兑换券卡片（初始隐藏） -->
+    <!-- 第二页：兑换券卡片，点击后显示，只有两张图片 + “专属兑换券”文字 -->
     <div class="voucher-card" id="voucherCard">
-    <img src="1.png" alt="兑换券一">
-    <img src="2.png" alt="兑换券二" style="margin-top: 15px;">
+      <img src="1.png" alt="兑换券一">
+      <img src="2.png" alt="兑换券二">
       <div class="voucher-text">🎁 专属兑换券</div>
-      <div class="voucher-sub">请你喝一杯咖啡或奶茶 ☕️</div>
+      <div class="voucher-sub">（此文字已隐藏）</div>
     </div>
+  </div>
 
   <script>
-    const giftBox = document.getElementById('giftBox');
-    const lid = document.getElementById('lid');
-    const hintText = document.getElementById('hintText');
-    const voucherCard = document.getElementById('voucherCard');
+    (function() {
+      const firstPage = document.getElementById('firstPageContainer');
+      const giftBox = document.getElementById('giftBox');
+      const lid = document.getElementById('lid');
+      const voucherCard = document.getElementById('voucherCard');
+      let isOpened = false;
+      let animationFrameId = null;
+      let particles = [];
 
-    giftBox.addEventListener('click', () => {
-      // 防止重复点击
-      if (giftBox.style.pointerEvents === 'none') return;
-      giftBox.style.pointerEvents = 'none';
+      // 获取礼物盒中心坐标（相对于视口）
+      function getGiftCenterPosition() {
+        const rect = giftBox.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+      }
 
-      // 盖子打开动画
-      lid.style.transform = 'rotate(-25deg) translateY(-15px)';
-      
-      // 0.8秒后隐藏礼物盒，显示兑换券
-      setTimeout(() => {
-        giftBox.style.display = 'none';
-        hintText.style.display = 'none';
-        voucherCard.style.display = 'block';
-      }, 800);
-    });
+      // 星星粒子类
+      class StarParticle {
+        constructor(x, y, angle, speed, size, color, rotationSpeed) {
+          this.x = x; this.y = y;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.size = size;
+          this.color = color;
+          this.alpha = 1;
+          this.life = 1;
+          this.decay = 0.02 + Math.random() * 0.025;
+          this.rotation = Math.random() * Math.PI * 2;
+          this.rotationSpeed = rotationSpeed;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.vx *= 0.98;
+          this.vy *= 0.98;
+          this.vy += 0.08;
+          this.life -= this.decay;
+          this.alpha = this.life;
+          return this.life > 0;
+        }
+        draw(ctx) {
+          if (this.alpha <= 0) return;
+          ctx.save();
+          ctx.globalAlpha = this.alpha * 0.9;
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.rotation);
+          const spikes = 5;
+          const outerRadius = this.size;
+          const innerRadius = this.size * 0.45;
+          let rot = Math.PI / 2 * 3;
+          const step = Math.PI / spikes;
+          ctx.beginPath();
+          for (let i = 0; i < spikes; i++) {
+            const x1 = Math.cos(rot) * outerRadius;
+            const y1 = Math.sin(rot) * outerRadius;
+            ctx.lineTo(x1, y1);
+            rot += step;
+            const x2 = Math.cos(rot) * innerRadius;
+            const y2 = Math.sin(rot) * innerRadius;
+            ctx.lineTo(x2, y2);
+            rot += step;
+          }
+          ctx.closePath();
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = `rgba(255, 200, 50, 0.8)`;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      // 创建爆炸特效
+      function createStarExplosion(centerX, centerY) {
+        const colors = ['#FFD966', '#FFB347', '#FF8C42', '#FF6363', '#FFD700', '#F4C542', '#FFA559', '#F9E45B', '#FFCC66', '#FFAA33'];
+        // 星星粒子
+        for (let i = 0; i < 65; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 2.5 + Math.random() * 7;
+          const size = 6 + Math.random() * 12;
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const rotationSpeed = (Math.random() - 0.5) * 0.2;
+          const offsetX = (Math.random() - 0.5) * 18;
+          const offsetY = (Math.random() - 0.5) * 18;
+          particles.push(new StarParticle(centerX + offsetX, centerY + offsetY, angle, speed, size, color, rotationSpeed));
+        }
+        // 额外光点
+        for (let i = 0; i < 40; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1.5 + Math.random() * 6;
+          const size = 3 + Math.random() * 6;
+          const color = `hsl(${40 + Math.random() * 30}, 100%, 65%)`;
+          const glow = {
+            x: centerX + (Math.random() - 0.5) * 20,
+            y: centerY + (Math.random() - 0.5) * 20,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            size: size,
+            color: color,
+            alpha: 1,
+            life: 1,
+            decay: 0.018 + Math.random() * 0.02,
+            update() {
+              this.x += this.vx;
+              this.y += this.vy;
+              this.vx *= 0.97;
+              this.vy *= 0.97;
+              this.vy += 0.05;
+              this.life -= this.decay;
+              this.alpha = this.life;
+              return this.life > 0;
+            },
+            draw(ctx) {
+              if (this.alpha <= 0) return;
+              ctx.save();
+              ctx.globalAlpha = this.alpha * 0.8;
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+              ctx.fillStyle = this.color;
+              ctx.shadowBlur = 10;
+              ctx.shadowColor = 'gold';
+              ctx.fill();
+              ctx.restore();
+            }
+          };
+          particles.push(glow);
+        }
+
+        // 动画循环
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        let canvas = document.getElementById('starExplosionCanvas');
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          canvas.id = 'starExplosionCanvas';
+          canvas.className = 'star-explosion-canvas';
+          document.body.appendChild(canvas);
+        }
+        function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        const ctx = canvas.getContext('2d');
+        canvas.style.display = 'block';
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          let anyAlive = false;
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            const alive = p.update();
+            if (alive) {
+              anyAlive = true;
+              p.draw(ctx);
+            } else {
+              particles.splice(i, 1);
+              i--;
+            }
+          }
+          if (anyAlive && particles.length) {
+            animationFrameId = requestAnimationFrame(animate);
+          } else {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.display = 'none';
+            if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+            animationFrameId = null;
+            particles = [];
+          }
+        }
+        animate();
+      }
+
+      // 轻微振动（可选）
+      function gentleVibration() {
+        if ('vibrate' in navigator && navigator.vibrate) navigator.vibrate(50);
+      }
+
+      // 打开礼物
+      function openGift() {
+        if (isOpened) return;
+        isOpened = true;
+
+        const { x, y } = getGiftCenterPosition();
+        createStarExplosion(x, y);
+        gentleVibration();
+
+        lid.style.transform = 'rotate(-25deg) translateY(-15px)';
+
+        setTimeout(() => {
+          if (firstPage) {
+            firstPage.style.opacity = '0';
+            setTimeout(() => {
+              firstPage.style.display = 'none';
+            }, 350);
+          }
+          voucherCard.style.display = 'block';
+          voucherCard.style.animation = 'none';
+          voucherCard.offsetHeight;
+          voucherCard.style.animation = 'popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        }, 800);
+      }
+
+      if (giftBox) {
+        giftBox.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openGift();
+        });
+      }
+    })();
   </script>
 </body>
 </html>
