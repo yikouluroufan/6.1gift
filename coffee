@@ -218,12 +218,11 @@
 
     <!-- 兑换券卡片（初始隐藏） -->
     <div class="voucher-card" id="voucherCard">
-      <!-- 🔴 把 src 替换成你上传的兑换券图片地址 -->
-      <img src="https://via.placeholder.com/600x300/ffffff/1565c0?text=你的兑换券" alt="兑换券">
+      <img src="https://raw.githubusercontent.com/yikouluroufan/61-gift/main/1.png" alt="兑换券一">
+      <img src="https://raw.githubusercontent.com/yikouluroufan/61-gift/main/2.png" alt="兑换券二" style="margin-top: 15px;">
       <div class="voucher-text">🎁 专属兑换券</div>
-      <div class="voucher-sub">请你喝一杯咖啡 ☕️</div>
+      <div class="voucher-sub">请你喝一杯咖啡或奶茶 ☕️</div>
     </div>
-  </div>
 
   <script>
     const giftBox = document.getElementById('giftBox');
