@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>六一快乐 🎈</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(160deg, #e3f2fd 0%, #bbdefb 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 漂浮云朵和星星 */
+    .cloud, .star {
+      position: absolute;
+      opacity: 0.35;
+      pointer-events: none;
+      animation: float 8s infinite ease-in-out alternate;
+    }
+    .cloud {
+      width: 80px;
+      height: 40px;
+      background: white;
+      border-radius: 40px;
+      box-shadow: 20px -10px 0 white, 40px 0 0 white;
+    }
+    .cloud:nth-child(1) { top: 15%; left: 10%; animation-duration: 10s; }
+    .cloud:nth-child(2) { top: 60%; right: 15%; animation-duration: 12s; width: 100px; }
+    .cloud:nth-child(3) { top: 80%; left: 25%; animation-duration: 14s; width: 70px; }
+    .star {
+      width: 20px;
+      height: 20px;
+      background: #ffd54f;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+    .star:nth-child(4) { top: 20%; right: 20%; animation-duration: 7s; }
+    .star:nth-child(5) { top: 70%; left: 15%; animation-duration: 9s; }
+    .star:nth-child(6) { top: 40%; left: 70%; animation-duration: 11s; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-20px) rotate(3deg); }
+    }
+
+    /* 主内容区 */
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 20px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* 礼物盒 */
+    .gift-box {
+      position: relative;
+      width: 180px;
+      height: 200px;
+      margin: 0 auto 30px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .gift-box:active {
+      transform: scale(0.96);
+    }
+
+    /* 盒子身体 */
+    .box-body {
+      position: absolute;
+      bottom: 0;
+      left: 15px;
+      width: 150px;
+      height: 120px;
+      background: #1976d2;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(25, 118, 210, 0.3);
+    }
+    /* 丝带竖条 */
+    .ribbon-vertical {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 120px;
+      background: #ff9800;
+      border-radius: 4px 4px 0 0;
+    }
+    /* 盖子 */
+    .box-lid {
+      position: absolute;
+      top: 0;
+      left: 5px;
+      width: 170px;
+      height: 50px;
+      background: #2196f3;
+      border-radius: 14px 14px 4px 4px;
+      box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+      transform-origin: left bottom;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    /* 蝴蝶结 */
+    .bow {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 55px;
+      height: 35px;
+    }
+    .bow-left, .bow-right {
+      position: absolute;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      background: #ff9800;
+      border-radius: 50%;
+    }
+    .bow-left { left: 0; }
+    .bow-right { right: 0; }
+    .bow-center {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: #f57c00;
+      border-radius: 50%;
+    }
+
+    /* 兑换券卡片 */
+    .voucher-card {
+      display: none;
+      background: white;
+      border-radius: 24px;
+      padding: 25px 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+      animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin-top: 20px;
+    }
+    .voucher-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      margin-bottom: 15px;
+    }
+    .voucher-text {
+      color: #1565c0;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 5px 0;
+    }
+    .voucher-sub {
+      color: #64b5f6;
+      font-size: 0.95rem;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* 提示语 */
+    .hint {
+      color: #1976d2;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #0d47a1;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #1565c0;
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 装饰性云朵和星星 -->
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+
+  <div class="container">
+    <div class="title">🎈 六一快乐</div>
+    <div class="subtitle">希望你永远保持童心</div>
+
+    <!-- 礼物盒（初始可见） -->
+    <div class="gift-box" id="giftBox">
+      <div class="box-lid" id="lid"></div>
+      <div class="bow">
+        <div class="bow-left"></div>
+        <div class="bow-right"></div>
+        <div class="bow-center"></div>
+      </div>
+      <div class="box-body"></div>
+      <div class="ribbon-vertical"></div>
+    </div>
+
+    <div class="hint" id="hintText">👆 点一下拆礼物</div>
+
+    <!-- 兑换券卡片（初始隐藏） -->
+    <div class="voucher-card" id="voucherCard">
+      <!-- 🔴 把 src 替换成你上传的兑换券图片地址 -->
+      <img src="https://via.placeholder.com/600x300/ffffff/1565c0?text=你的兑换券" alt="兑换券">
+      <div class="voucher-text">🎁 专属兑换券</div>
+      <div class="voucher-sub">请你喝一杯咖啡 ☕️</div>
+    </div>
+  </div>
+
+  <script>
+    const giftBox = document.getElementById('giftBox');
+    const lid = document.getElementById('lid');
+    const hintText = document.getElementById('hintText');
+    const voucherCard = document.getElementById('voucherCard');
+
+    giftBox.addEventListener('click', () => {
+      // 防止重复点击
+      if (giftBox.style.pointerEvents === 'none') return;
+      giftBox.style.pointerEvents = 'none';
+
+      // 盖子打开动画
+      lid.style.transform = 'rotate(-25deg) translateY(-15px)';
+      
+      // 0.8秒后隐藏礼物盒，显示兑换券
+      setTimeout(() => {
+        giftBox.style.display = 'none';
+        hintText.style.display = 'none';
+        voucherCard.style.display = 'block';
+      }, 800);
+    });
+  </script>
+</body>
+</html>
